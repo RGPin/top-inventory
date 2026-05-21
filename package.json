@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --env-file=.env app.js"
+    "start": "node --env-file=.env app.js",
+    "dev": "node --env-file=.env --watch app.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/RGPin/top-inventory#readme",
   "dependencies": {
+    "ejs": "^5.0.2",
     "express": "^5.2.1",
     "pg": "^8.21.0"
   }
