@@ -121,8 +121,55 @@ async function getAllFromCategory(category) {
   }
 }
 
+/**
+ * Returns details of one part
+ * @param {number} id
+ * @returns {Promise<{
+ * id - number,
+ * category_id - number,
+ * brand - string,
+ * name - string,
+ * description - string,
+ * image_url - string,
+ * rating - number,
+ * quantity - number,
+ * price - number,
+ * created_at - Date,
+ * updated_at - Date,
+ * category - string,
+ * status - string
+ * } | null>}
+ */
+async function getPartById(id) {
+  if (typeof id !== "number") {
+    throw new Error("getPartById failed: id must be number");
+  }
+  try {
+    const { rows } = await pool.query(
+      `
+      SELECT
+        parts.*,
+        categories.name AS category,
+        CASE
+          WHEN parts.quantity > 0 THEN 'In stock'
+          ELSE 'Out of stock'
+        END AS status
+        FROM parts
+        JOIN categories ON parts.category_id = categories.id
+        WHERE parts.id = $1;
+      `,
+      [id],
+    );
+    return rows[0] || null;
+  } catch (error) {
+    console.error(`getPartById failed: ${error}`);
+    throw new Error(`getPartById failed: ${error.message}`);
+  }
+}
+
 module.exports = {
   getAllParts,
   getAllCategories,
   getAllFromCategory,
+  getPartById,
 };

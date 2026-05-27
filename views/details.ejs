@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/details.css" />
+    <title><%= details.brand %> <%= details.name %> - Details</title>
+  </head>
+  <body>
+    <a href="/inventory/<%= details.category %>" class="back-link"
+      >&larr; Back to Inventory</a
+    >
+
+    <div class="detail-container">
+      <div class="product-image">
+        <img src="<%= details.image_url %>" alt="<%= details.name %>" />
+      </div>
+
+      <div class="product-info">
+        <div class="meta-info">
+          <strong><%= details.brand %></strong> &bull; <%= details.category %>
+        </div>
+
+        <h1><%= details.name %></h1>
+
+        <span
+          class="badge <%= details.status === 'In stock' ? 'in-stock' : 'out-of-stock' %>"
+        >
+          <%= details.status %> (<%= details.quantity %> items available)
+        </span>
+
+        <div class="price-tag">$<%= details.price %></div>
+
+        <h3>Description</h3>
+        <p><%= details.description %></p>
+
+        <p><strong>Rating:</strong> <%= details.rating %> / 5.00</p>
+
+        <p style="font-size: 0.85rem; color: #888">
+          Added: <%= new Date(details.created_at).toLocaleDateString() %><br />
+          Last Updated: <%= new Date(details.updated_at).toLocaleDateString() %>
+        </p>
+
+        <div class="actions">
+          <a href="/parts/<%= details.id %>/edit" class="btn btn-edit"
+            >Edit Item</a
+          >
+
+          <form
+            action="/parts/<%= details.id %>/delete"
+            method="POST"
+            style="display: inline"
+            onsubmit="
+              return confirm('Are you sure you want to delete this item?');
+            "
+          >
+            <button type="submit" class="btn btn-delete">Delete Item</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
