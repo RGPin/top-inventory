@@ -7,5 +7,6 @@ partsRouter.post("/new", controller.savePartCreateForm);
 partsRouter.get("/:id", controller.getPartDetails);
 partsRouter.get("/:id/edit", controller.getPartEditForm);
 partsRouter.post("/:id/edit", controller.savePartEditForm);
+partsRouter.post("/:id/delete", controller.deletePart);
 
 module.exports = partsRouter;

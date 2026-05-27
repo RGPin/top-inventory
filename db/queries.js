@@ -248,6 +248,26 @@ async function createPart({
   }
 }
 
+async function deletePartById(id) {
+  if (typeof id !== "number") {
+    throw new Error("deletePartById failed: id must be number");
+  }
+  try {
+    const { rows } = await pool.query(
+      `
+      DELETE FROM parts
+      WHERE id = $1
+      RETURNING *;
+      `,
+      [id],
+    );
+    return rows[0] || null;
+  } catch (error) {
+    console.error(`deletePartById failed: ${error}`);
+    throw new Error(`deletePartById failed: ${error.message}`);
+  }
+}
+
 module.exports = {
   getAllParts,
   getAllCategories,
@@ -255,4 +275,5 @@ module.exports = {
   getPartById,
   updatePart,
   createPart,
+  deletePartById,
 };

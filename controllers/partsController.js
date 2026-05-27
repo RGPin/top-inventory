@@ -121,10 +121,26 @@ async function savePartCreateForm(req, res) {
   }
 }
 
+async function deletePart(req, res) {
+  try {
+    const id = Number(req.params.id);
+    const deleted = await db.deletePartById(id);
+
+    if (!deleted) {
+      return res.status(404).send("Failed to delete PC part");
+    }
+    res.redirect("/");
+  } catch (error) {
+    console.error(`Controller error. deletePart failed: ${error}`);
+    res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   getPartDetails,
   getPartEditForm,
   savePartEditForm,
   getPartCreateForm,
   savePartCreateForm,
+  deletePart,
 };
