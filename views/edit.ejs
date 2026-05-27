@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/edit.css" />
+  <title>Edit - <%= details.name %></title>
+</head>
+<body>
+
+  <h1>Edit PC Part</h1>
+  
+  <form action="/parts/<%= details.id %>/edit" method="POST">
+    
+    <div class="form-group">
+      <label for="brand">Brand</label>
+      <input type="text" id="brand" name="brand" value="<%= details.brand %>" required>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" value="<%= details.name %>" required>
+    </div>
+
+    <div class="form-group">
+      <label for="category_id">Category</label>
+      <select id="category_id" name="category_id" required>
+        <% categories.forEach(cat => { %>
+          <option value="<%= cat.id %>" <%= cat.id === details.category_id ? 'selected' : '' %>>
+            <%= cat.name %>
+          </option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price ($)</label>
+      <input type="number" id="price" name="price" step="0.01" min="0" value="<%= details.price %>" required>
+    </div>
+
+    <div class="form-group">
+      <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" name="quantity" min="0" value="<%= details.quantity %>" required>
+    </div>
+
+    <div class="form-group">
+      <label for="rating">Rating (0.00 - 5.00)</label>
+      <input type="number" id="rating" name="rating" step="0.1" min="0" max="5" value="<%= details.rating %>" required>
+    </div>
+
+    <div class="form-group">
+      <label for="image_url">Image URL</label>
+      <input type="text" id="image_url" name="image_url" value="<%= details.image_url %>">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description"><%= details.description %></textarea>
+    </div>
+
+    <div class="btn-container">
+      <button type="submit" class="btn-submit">Save Changes</button>
+      <a href="/parts/<%= details.id %>" class="btn-cancel">Cancel</a>
+    </div>
+
+  </form>
+
+</body>
+</html>

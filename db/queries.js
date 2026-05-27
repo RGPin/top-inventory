@@ -167,9 +167,56 @@ async function getPartById(id) {
   }
 }
 
+async function updatePart({
+  id,
+  brand,
+  name,
+  category_id,
+  price,
+  quantity,
+  rating,
+  image_url,
+  description,
+}) {
+  try {
+    const { rows } = await pool.query(
+      `
+      UPDATE parts
+      SET
+        brand = $1,
+        name = $2,
+        category_id = $3,
+        price = $4,
+        quantity = $5,
+        rating = $6,
+        image_url = $7,
+        description = $8
+      WHERE parts.id = $9
+      RETURNING *;
+      `,
+      [
+        brand,
+        name,
+        Number(category_id),
+        Number(price),
+        Number(quantity),
+        Number(rating),
+        image_url || null,
+        description || null,
+        Number(id),
+      ],
+    );
+    return rows[0] || null;
+  } catch (error) {
+    console.error(`updatePart failed: ${error}`);
+    throw new Error(`updatePart failed: ${error.message}`);
+  }
+}
+
 module.exports = {
   getAllParts,
   getAllCategories,
   getAllFromCategory,
   getPartById,
+  updatePart,
 };
