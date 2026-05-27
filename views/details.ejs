@@ -13,7 +13,10 @@
 
     <div class="detail-container">
       <div class="product-image">
-        <img src="<%= details.image_url %>" alt="<%= details.name %>" />
+        <img
+          src="<%= details.image_url ? details.image_url : '' %>"
+          alt="<%= details.name %>"
+        />
       </div>
 
       <div class="product-info">

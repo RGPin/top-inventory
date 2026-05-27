@@ -213,10 +213,46 @@ async function updatePart({
   }
 }
 
+async function createPart({
+  brand,
+  name,
+  category_id,
+  price,
+  quantity,
+  rating,
+  image_url,
+  description,
+}) {
+  try {
+    const { rows } = await pool.query(
+      `
+      INSERT INTO parts (brand, name, category_id, price, quantity, rating, image_url, description)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      RETURNING *;
+      `,
+      [
+        brand,
+        name,
+        Number(category_id),
+        Number(price),
+        Number(quantity),
+        Number(rating),
+        image_url || null,
+        description || null,
+      ],
+    );
+    return rows[0] || null;
+  } catch (error) {
+    console.error(`createPart failed: ${error}`);
+    throw new Error(`createPart failed: ${error.message}`);
+  }
+}
+
 module.exports = {
   getAllParts,
   getAllCategories,
   getAllFromCategory,
   getPartById,
   updatePart,
+  createPart,
 };
