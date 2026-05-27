@@ -1,1 +1,24 @@
-<div class="parts-grid"></div>
+<div class="inventory-grid">
+  <% parts.forEach(part => { %>
+    <div class="part-card">
+      <img src="<%= part.image_url %>" alt="<%= part.name %>" class="part-img">
+      
+      <div class="part-info">
+        <span class="part-brand"><%= part.brand %></span>
+        <h3 class="part-name"><%= part.name %></h3>
+        <span class="part-category"><%= part.category %></span>
+        
+        <span class="badge <%= part.status === 'In stock' ? 'in-stock' : 'out-of-stock' %>">
+          <%= part.status %> (<%= part.quantity %> left)
+        </span>
+        
+        <p class="part-price">$<%= part.price %></p>
+      </div>
+
+      <div class="part-actions">
+        <a href="/parts/<%= part.id %>" class="btn btn-view">View</a>
+        <a href="/parts/<%= part.id %>/edit" class="btn btn-edit">Edit</a>
+      </div>
+    </div>
+  <% }) %>
+</div>

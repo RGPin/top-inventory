@@ -3,9 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
     <title>Document</title>
   </head>
   <body>
-    <h1>Haru warudo</h1>
+    <div class="app-layout">
+      <aside class="sidebar">
+        <h2>Categories</h2>
+        <ul class="category-list">
+          <li>
+            <a href="/inventory" class="active">All Parts</a>
+          </li>
+          <% categories.forEach(cat => { %>
+            <li>
+              <a href="/inventory/<%= cat.name %>"><%= cat.name %></a>
+            </li>
+          <% }) %>
+        </ul>
+      </aside>
+
+      <main class="main-content">
+        <div class="content-header">
+          <h1>PC Parts Inventory</h1>
+          <a href="/parts/new" class="btn btn-add">+ Add New Part</a>
+        </div>
+
+        <%- include("partials/grid.ejs") %>
+      </main>
+    </div>
   </body>
 </html>

@@ -41,6 +41,27 @@ async function getAllParts() {
 }
 
 /**
+ * Returns all categories
+ * @returns {Promise<{
+ * id - number,
+ * name - string
+ * }[]>}
+ */
+async function getAllCategories() {
+  try {
+    const { rows } = await pool.query(
+      `
+      SELECT * FROM categories;
+      `,
+    );
+    return rows;
+  } catch (error) {
+    console.error(`getAllCategories failed: ${error}`);
+    throw new Error(`getAllCategories failed: ${error.message}`);
+  }
+}
+
+/**
  * Returns all parts from a category
  * @param {string} category
  * @returns {Promise<{
@@ -102,5 +123,6 @@ async function getAllFromCategory(category) {
 
 module.exports = {
   getAllParts,
+  getAllCategories,
   getAllFromCategory,
 };
