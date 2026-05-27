@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="/index.css" />
     <title>Document</title>
   </head>
   <body>
@@ -12,11 +12,14 @@
         <h2>Categories</h2>
         <ul class="category-list">
           <li>
-            <a href="/inventory" class="active">All Parts</a>
+            <a href="/inventory" class="<%= typeof currentCategory === 'undefined' ? 'active' : '' %>">All Parts</a>
           </li>
           <% categories.forEach(cat => { %>
             <li>
-              <a href="/inventory/<%= cat.name %>"><%= cat.name %></a>
+              <a href="/inventory/<%= cat.name %>" 
+                class="<%= typeof currentCategory !== 'undefined' && currentCategory === cat.name ? 'active' : '' %>">
+                <%= cat.name %>
+              </a>
             </li>
           <% }) %>
         </ul>

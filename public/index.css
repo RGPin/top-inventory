@@ -29,7 +29,7 @@
 }
 
 .category-list li a:hover, 
-.category-list li a.active {
+.category-list li .active {
   background-color: #007bff;
   color: white;
 }
