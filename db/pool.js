@@ -1,4 +1,5 @@
 const { Pool } = require("pg");
 
-const connectionString = "nani?";
-// set up db
+module.exports = new Pool({
+  connectionString: process.env.DB_URI,
+});
