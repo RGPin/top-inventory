@@ -2,21 +2,7 @@ const pool = require("./pool");
 
 /**
  * Returns all parts
- * @returns {Promise<{
- * id - number,
- * category_id - number,
- * brand - string,
- * name - string,
- * description - string,
- * image_url - string,
- * rating - number,
- * quantity - number,
- * price - number,
- * created_at - Date,
- * updated_at - Date,
- * category - string,
- * status - string
- * }[]>}
+ * @returns {Promise<Object[]>} - Returns all rows from parts table
  */
 async function getAllParts() {
   try {
@@ -42,10 +28,7 @@ async function getAllParts() {
 
 /**
  * Returns all categories
- * @returns {Promise<{
- * id - number,
- * name - string
- * }[]>}
+ * @returns {Promise<Object[]>} - Returns all rows from the category table
  */
 async function getAllCategories() {
   try {
@@ -64,20 +47,7 @@ async function getAllCategories() {
 /**
  * Returns all parts from a category
  * @param {string} category
- * @returns {Promise<{
- * id - number,
- * category_id - number,
- * brand - string,
- * name - string,
- * description - string,
- * image_url - string,
- * rating - number,
- * quantity - number,
- * price - number,
- * created_at - Date,
- * updated_at - Date,
- * status - string
- * }[]>}
+ * @returns {Promise<Object[]>} - Returns all parts under a specific category.
  */
 async function getAllFromCategory(category) {
   const categories = [
@@ -124,21 +94,7 @@ async function getAllFromCategory(category) {
 /**
  * Returns details of one part
  * @param {number} id
- * @returns {Promise<{
- * id - number,
- * category_id - number,
- * brand - string,
- * name - string,
- * description - string,
- * image_url - string,
- * rating - number,
- * quantity - number,
- * price - number,
- * created_at - Date,
- * updated_at - Date,
- * category - string,
- * status - string
- * } | null>}
+ * @returns {Promise<Object|null>} - An object or null if not found.
  */
 async function getPartById(id) {
   if (typeof id !== "number") {
@@ -167,6 +123,24 @@ async function getPartById(id) {
   }
 }
 
+/**
+ * Updates an existing part in the database.
+ *
+ * @async
+ * @function updatePart
+ * @param {Object} partData - The part data to update.
+ * @param {number|string} partData.id - The ID of the part to update.
+ * @param {string} partData.brand - The brand name of the part.
+ * @param {string} partData.name - The name of the part.
+ * @param {number|string} partData.category_id - The category ID the part belongs to.
+ * @param {number|string} partData.price - The price of the part.
+ * @param {number|string} partData.quantity - Available quantity in stock.
+ * @param {number|string} partData.rating - Rating of the part.
+ * @param {string|null} [partData.image_url] - Optional image URL for the part.
+ * @param {string|null} [partData.description] - Optional description of the part.
+ *
+ * @returns {Promise<Object|null>} The updated part object, or null if no part was found.
+ */
 async function updatePart({
   id,
   brand,
@@ -213,6 +187,25 @@ async function updatePart({
   }
 }
 
+/**
+ * Adds a new part in the database.
+ *
+ * @async
+ * @function createPart
+ * @param {Object} partData - The part data to update.
+ * @param {string} partData.brand - The brand name of the part.
+ * @param {string} partData.name - The name of the part.
+ * @param {number|string} partData.category_id - The category ID the part belongs to.
+ * @param {number|string} partData.price - The price of the part.
+ * @param {number|string} partData.quantity - Available quantity in stock.
+ * @param {number|string} partData.rating - Rating of the part.
+ * @param {string|null} [partData.image_url] - Optional image URL for the part.
+ * @param {string|null} [partData.description] - Optional description of the part.
+ *
+ * @returns {Promise<Object|null>} The created part object, or null if no part was added.
+ *
+ * @throws {Error} Throws an error if the database update fails.
+ */
 async function createPart({
   brand,
   name,
@@ -248,6 +241,12 @@ async function createPart({
   }
 }
 
+/**
+ *
+ * @function deletePartById
+ * @param {number} id
+ * @returns {Promise<Object|null>}
+ */
 async function deletePartById(id) {
   if (typeof id !== "number") {
     throw new Error("deletePartById failed: id must be number");
