@@ -203,8 +203,6 @@ async function updatePart({
  * @param {string|null} [partData.description] - Optional description of the part.
  *
  * @returns {Promise<Object|null>} The created part object, or null if no part was added.
- *
- * @throws {Error} Throws an error if the database update fails.
  */
 async function createPart({
   brand,
@@ -242,10 +240,10 @@ async function createPart({
 }
 
 /**
- *
+ * Deletes a part
  * @function deletePartById
  * @param {number} id
- * @returns {Promise<Object|null>}
+ * @returns {Promise<Object|null>} - Returns deleted object
  */
 async function deletePartById(id) {
   if (typeof id !== "number") {
